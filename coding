@@ -1,0 +1,53 @@
+protocol Coding {
+    var time: Int { get }
+    var linesOfCode: Int { get }
+    func writeCode(platform: Platform, numberOfSpecialist: Int)
+}
+
+protocol CodingStop {
+    func stopCoding()
+}
+
+enum Platform {
+    case ios
+    case android
+    case web
+}
+
+class Company: Coding, CodingStop {
+    var numberOfProgrammers: Int
+    var specializations: [Platform]
+    
+    init(numberOfProgrammers: Int, specializations: [Platform]) {
+        self.numberOfProgrammers = numberOfProgrammers
+        self.specializations = specializations
+    }
+    
+    var time: Int = 0
+    var linesOfCode: Int = 0
+    
+    func writeCode(platform: Platform, numberOfSpecialist: Int) {
+        guard specializations.contains(platform) else {
+            print("Отсутствуют специалисты для платформы \(platform)")
+            return
+        }
+        
+        print("Разработка началась. Пишем код для \(platform)")
+        
+        time += 1
+        linesOfCode += numberOfSpecialist * time
+        
+        if time >= 10 {
+            stopCoding()
+        }
+    }
+    
+    func stopCoding() {
+        print("Работа закончена. Сдаю в тестирование.")
+    }
+}
+
+let company = Company(numberOfProgrammers: 10, specializations: [.ios, .android])
+company.writeCode(platform: .ios, numberOfSpecialist: 5)
+company.writeCode(platform: .android, numberOfSpecialist: 3)
+company.writeCode(platform: .web, numberOfSpecialist: 2)
