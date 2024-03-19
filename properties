@@ -1,0 +1,23 @@
+protocol Example {
+    var property1: Int { get }
+    var property2: String? { get set }
+    func Metod()
+}
+
+class Classs: Example {
+    var property1: Int = 0 
+    var property2: String?
+    
+    init(property1: Int) {
+        self.property1 = property1
+    }
+    
+    func Metod() {
+        print("hi")
+    }
+}
+
+
+let instance = Classs(property1: 5)
+print(instance.property1) 
+instance.Metod() 
