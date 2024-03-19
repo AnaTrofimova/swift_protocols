@@ -1,0 +1,47 @@
+final class Ref<T> {
+    var val: T
+    
+    init(v: T) {
+        val = v
+    }
+}
+
+func isKnownUniquelyReferenced<T>(_ object: inout T?) -> Bool where T: AnyObject {
+    Swift.isKnownUniquelyReferenced(&object)
+}
+
+struct Box<T> {
+    var ref: Ref<T>
+    
+    init(x: T) {
+        ref = Ref(v: x)
+    }
+    
+    var value: T {
+        get {
+            ref.val
+        }
+        set {
+            if (!isKnownUniquelyReferenced(&ref)) {
+                ref = Ref(v: newValue)
+            } else {
+                ref.val = newValue
+            }
+        }
+    }
+}
+
+struct IOSCollection {
+    var x: Int
+}
+
+let val = IOSCollection(x: 5)
+var box = Box(x: val)
+var box2 = box
+
+withUnsafePointer(to: &box.value) {
+    print($0)
+}
+withUnsafePointer(to: &box2.value) {
+    print($0)
+}
