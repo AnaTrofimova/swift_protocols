@@ -1,0 +1,12 @@
+protocol GameDice {
+    var numberDice: Int { get }
+}
+
+extension Int: GameDice {
+    var numberDice: Int {
+        return self
+    }
+}
+
+let diceCoub = 4
+print("Выпало \(diceCoub.numberDice) на кубике")
