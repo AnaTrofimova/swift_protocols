@@ -1,10 +1,10 @@
-protocol Coding {
+protocol WriteCode {
     var time: Int { get }
     var linesOfCode: Int { get }
     func writeCode(platform: Platform, numberOfSpecialist: Int)
 }
 
-protocol CodingStop {
+protocol StopCoding {
     func stopCoding()
 }
 
@@ -14,7 +14,7 @@ enum Platform {
     case web
 }
 
-class Company: Coding, CodingStop {
+class Company: WriteCode, StopCoding {
     var numberOfProgrammers: Int
     var specializations: [Platform]
     
@@ -51,3 +51,5 @@ let company = Company(numberOfProgrammers: 10, specializations: [.ios, .android]
 company.writeCode(platform: .ios, numberOfSpecialist: 5)
 company.writeCode(platform: .android, numberOfSpecialist: 3)
 company.writeCode(platform: .web, numberOfSpecialist: 2)
+
+company.stopCoding()
